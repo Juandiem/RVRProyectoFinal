@@ -14,10 +14,11 @@ private:
     Vector2D offset = Vector2D(90,60);
     Vector2D size;
     Token **grid;
+    char nick;
 
 public:
   
-    Grid();
+    Grid(char n);
     ~Grid();
 
     SDLTexture* getTexture();
@@ -28,5 +29,7 @@ public:
     void setSize(Vector2D newSize);
     void setTexture(SDLTexture* newTexture);
     void placeToken(const char* n, int col);
+
+    char getNick();
 
 };

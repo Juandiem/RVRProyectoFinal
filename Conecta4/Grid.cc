@@ -2,7 +2,7 @@
 #include "Message.h"
 #include "SDLTexture.h"
 
-Grid::Grid() :
+Grid::Grid(char n) : nick(n)
 {
     pos = offset;
     grid = new Token * [7];
@@ -164,4 +164,8 @@ bool checkPlayerTokens(const char* n){
     }
 
     return conecta4;
+}
+
+char getNick(){
+    return nick;
 }

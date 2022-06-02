@@ -6,12 +6,17 @@
 Message::Message() : type(MessageType::UNDEFINED)
 {
 }
-Message::Message(MessageType type_, Button *player_) : type(type_)
+Message::Message(MessageType type_, char player_) : type(type_)
 {
-    nick = player_->getNick();
+    nick = player_;
     objectInfo = ObjectInfo();
     //objectInfo.tam = player_->getPlayerTam();
     //objectInfo.pos = player_->getPlayerPos();
+    column = -1;
+}
+Message::Message(MessageType type_ ,char player_, int c){
+    nick = player_;
+    column = c;
 }
 
 Message::~Message()
@@ -186,12 +191,12 @@ int Message::from_bin(char *bobj)
     return 0;
 }
 
-std::string Message::getNick()
+char Message::getNick()
 {
     return nick;
 }
 
-void Message::setNick(std::string newNick)
+void Message::setNick(char newNick)
 {
     nick = newNick;
 }

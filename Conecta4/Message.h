@@ -3,23 +3,19 @@
 #include  <string>
 #include <SDL2/SDL.h>
 #include "ObjectInfo.h"
-class Button;
 
 
 enum class MessageType: int8_t
 {
-    LOGIN   = 0,
-    PLAYERINFO = 1,
-    WIN = 2,
-    PIEDRA = 3,
-    PAPEL = 4,
-    TIJERAS = 5,
+    PLAYERINFO = 0,
+    WIN = 1,
+    LOSE = 2,
+    PLACETOKEN = 3,
+    GRIDFULL = 4,
+    LOGIN  = 5,
     LOGOUT  = 6,
     NEWPLAYER = 7,
-    UNDEFINED = 8,
-    DRAW=9,
-    LOOSE=10,
-    
+    UNDEFINED = 8    
 };
 
 class Message: public Serializable{
@@ -27,9 +23,9 @@ protected:
     size_t messageSize = sizeof(MessageType);
     MessageType type;
     SDL_Rect dimensions;
-    std::string nick;
+    char nick;
     ObjectInfo objectInfo;
-   
+    int column;
 
     //Metodos para la serializacion de nuestros mensajes
     void serializeTypeNick();
@@ -42,7 +38,8 @@ protected:
 public:
     
     Message();
-    Message(MessageType type_ ,Button* player_);
+    Message(MessageType type_ ,char player_);
+    Message(MessageType type_ ,char player_, int c);
     
     virtual ~Message();
 
@@ -51,12 +48,12 @@ public:
 
     size_t getMessageSize();
     MessageType getMessageType();
-    std::string getNick();
+    char getNick();
     ObjectInfo getObjectInfo()const{
         return objectInfo;
     }
     
-    void setNick(std::string newNick);
+    void setNick(char newNick);
     void setObjectInfo(const ObjectInfo& info){
         objectInfo= info;
     }

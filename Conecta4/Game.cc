@@ -28,7 +28,7 @@ Game::Game(const char *s, const char *p, const char *n) : socket(s, p)
 
     background = app->getTextureManager()->getTexture(Resources::TextureId::Background);
 
-    grid = new Grid();
+    grid = new Grid(n);
 }
 
 Game::~Game()
@@ -81,7 +81,7 @@ void Game::net_thread()
              waitingResult=false;
              break;
         }
-         case MessageType::LOOSE:
+         case MessageType::LOSE:
         {
             std::cout << "Has perdido \n"; 
             waitingResult=false;
@@ -105,7 +105,8 @@ void Game::input_thread()
     {
         if ( isRunning)
         {
-            Message m(MessageType::PIEDRA, piedra);
+            
+            Message m(MessageType::PLACETOKEN, grid->getNick());
             socket.send(m, socket);
             waitingResult=true;
         }
@@ -120,6 +121,42 @@ void Game::input_thread()
         }
     }
     if (HandleEvents::instance()->isKeyDown(SDL_SCANCODE_3))
+    {
+        if ( isRunning)
+        {
+            Message m(MessageType::TIJERAS, piedra);
+            socket.send(m, socket);
+            waitingResult=true;
+        }
+    }
+    if (HandleEvents::instance()->isKeyDown(SDL_SCANCODE_4))
+    {
+        if ( isRunning)
+        {
+            Message m(MessageType::TIJERAS, piedra);
+            socket.send(m, socket);
+            waitingResult=true;
+        }
+    }
+    if (HandleEvents::instance()->isKeyDown(SDL_SCANCODE_5))
+    {
+        if ( isRunning)
+        {
+            Message m(MessageType::TIJERAS, piedra);
+            socket.send(m, socket);
+            waitingResult=true;
+        }
+    }
+    if (HandleEvents::instance()->isKeyDown(SDL_SCANCODE_6))
+    {
+        if ( isRunning)
+        {
+            Message m(MessageType::TIJERAS, piedra);
+            socket.send(m, socket);
+            waitingResult=true;
+        }
+    }
+    if (HandleEvents::instance()->isKeyDown(SDL_SCANCODE_7))
     {
         if ( isRunning)
         {

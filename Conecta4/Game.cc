@@ -110,7 +110,7 @@ void Game::input_thread()
     {
         if ( isRunning)
         {
-            Message m(MessageType::PLACETOKEN, grid->getNick());
+            Message m(MessageType::PLACETOKEN, grid->getNick(), 0);
             socket.send(m, socket);
             waitingResult=true;
         }
@@ -119,7 +119,7 @@ void Game::input_thread()
     {
         if ( isRunning)
         {
-            Message m(MessageType::PAPEL, piedra);
+            Message m(MessageType::PLACETOKEN, grid->getNick(), 1);
             socket.send(m, socket);
             waitingResult=true;
         }
@@ -128,7 +128,7 @@ void Game::input_thread()
     {
         if ( isRunning)
         {
-            Message m(MessageType::TIJERAS, piedra);
+            Message m(MessageType::PLACETOKEN, grid->getNick(), 2);
             socket.send(m, socket);
             waitingResult=true;
         }
@@ -137,7 +137,7 @@ void Game::input_thread()
     {
         if ( isRunning)
         {
-            Message m(MessageType::TIJERAS, piedra);
+            Message m(MessageType::PLACETOKEN, grid->getNick(), 3);
             socket.send(m, socket);
             waitingResult=true;
         }
@@ -146,7 +146,7 @@ void Game::input_thread()
     {
         if ( isRunning)
         {
-            Message m(MessageType::TIJERAS, piedra);
+            Message m(MessageType::PLACETOKEN, grid->getNick(), 4);
             socket.send(m, socket);
             waitingResult=true;
         }
@@ -155,7 +155,7 @@ void Game::input_thread()
     {
         if ( isRunning)
         {
-            Message m(MessageType::TIJERAS, piedra);
+            Message m(MessageType::PLACETOKEN, grid->getNick(), 5);
             socket.send(m, socket);
             waitingResult=true;
         }
@@ -164,7 +164,7 @@ void Game::input_thread()
     {
         if ( isRunning)
         {
-            Message m(MessageType::TIJERAS, piedra);
+            Message m(MessageType::PLACETOKEN, grid->getNick(), 6);
             socket.send(m, socket);
             waitingResult=true;
         }

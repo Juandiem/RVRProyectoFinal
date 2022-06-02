@@ -1,0 +1,17 @@
+DEPS = Vector2D.h Token.h Grid.h PlayerInfo.h Resources.h InputManager.h SDLTexture.h TextureManager.h Socket.h Message.h GameServer.h SDLApp.h Player.h Game.h  ChatClient.h ChatServer.h
+
+SERVER = Vector2D.o  Resources.o Socket.o Player.o Message.o GameServer.o
+CLIENT = Vector2D.o  Resources.o Token.o Grid.o InputManager.o SDLTexture.o TextureManager.o Socket.o Player.o Message.o SDLApp.o  Game.o 
+#LINKER_FLAGS specifies the libraries we're linking against
+LIBS =  -lpthread 
+LIBSSDL=-lSDL2 -lSDL2_image -lSDL2_ttf
+%.o: %.cc $(DEPS)
+	$(CC) -g -c -o $@ $< $(CFLAGS)
+all: cs cc
+cs: $(SERVER) ChatServer.o
+	g++ -o $@ $^ $(CFLAGS) `pkg-config --cflags --libs sdl2` $(LIBS) $(LIBSSDL)
+cc: $(CLIENT) ChatClient.o
+	g++ -o $@ $^ $(CFLAGS) `pkg-config --cflags --libs sdl2` $(LIBS) $(LIBSSDL) 
+.PHONY: clean
+clean:
+	rm -f *.o server client

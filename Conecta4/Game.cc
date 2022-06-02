@@ -25,7 +25,6 @@ Game::Game(const char *s, const char *p, const char *n) : socket(s, p)
         app->getTextureManager()->loadFromImg(image.textureId, app->getRenderer(), image.filename);
     }
 
-
     background = app->getTextureManager()->getTexture(Resources::TextureId::Background);
 
     grid = new Grid(n);
@@ -86,7 +85,13 @@ void Game::net_thread()
             std::cout << "Has perdido \n"; 
             waitingResult=false;
             break;
-        }     
+        }
+         case MessageType::PLACETOKEN:
+        {
+            std::cout << "Token puesto \n" ;
+             grid->placeToken(em.getNick(), em.getColumn());
+             break;
+        }  
         }
     }
 
@@ -105,7 +110,6 @@ void Game::input_thread()
     {
         if ( isRunning)
         {
-            
             Message m(MessageType::PLACETOKEN, grid->getNick());
             socket.send(m, socket);
             waitingResult=true;

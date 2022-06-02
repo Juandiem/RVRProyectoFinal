@@ -52,7 +52,8 @@ public:
     ObjectInfo getObjectInfo()const{
         return objectInfo;
     }
-    
+    int getColumn();
+
     void setNick(char newNick);
     void setObjectInfo(const ObjectInfo& info){
         objectInfo= info;

@@ -55,14 +55,7 @@ void Message::to_bin()
         serializeObjectInfo();
         break;
     }
-
-     case MessageType::DRAW:
-    {
-        serializeObjectInfo();
-        break;
-    }
-
-     case MessageType::LOOSE:
+     case MessageType::LOSE:
     {
         serializeObjectInfo();
         break;
@@ -144,32 +137,14 @@ int Message::from_bin(char *bobj)
         break;
     }
 
-     case MessageType::DRAW:
-    {
-        constructObjectInfo(bobj);
-        break;
-    }
-
-     case MessageType::LOOSE:
+     case MessageType::LOSE:
     {
         constructObjectInfo(bobj);
         break;
     }
 
 
-     case MessageType::PIEDRA:
-    {
-        constructObjectInfo(bobj);
-        break;
-    }
-
-    case MessageType::PAPEL:
-    {
-        constructObjectInfo(bobj);
-        break;
-    }
-
-    case MessageType::TIJERAS:
+     case MessageType::PLACETOKEN:
     {
         constructObjectInfo(bobj);
         break;
@@ -194,6 +169,11 @@ int Message::from_bin(char *bobj)
 char Message::getNick()
 {
     return nick;
+}
+
+int Message::getColumn()
+{
+    return column;
 }
 
 void Message::setNick(char newNick)

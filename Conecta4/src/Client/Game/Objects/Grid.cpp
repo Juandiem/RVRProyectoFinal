@@ -79,8 +79,8 @@ void Grid::placeToken(Token* token, int col){
     if(freeRow >= 0){
         token->setTransform(120 + 33 + 88 * col, 90 + 30 + 88 * freeRow);
         tokenGrid[col][freeRow] = token;
+        printf("Token Placed");
     }
-    else delete token;
 }
 
 bool Grid::checkPlayerTokens(std::string color){
@@ -191,4 +191,12 @@ bool Grid::checkPlayerTokens(std::string color){
     }
 
     return conecta4;
+}
+
+void Grid::setColor(std::string c){
+    color = color;
+}
+
+std::string Grid::getColor(){
+    return color;
 }

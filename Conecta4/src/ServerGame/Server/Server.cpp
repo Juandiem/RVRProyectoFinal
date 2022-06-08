@@ -361,7 +361,7 @@ void Server::stepSimulation()
 
 void Server::updateInfoClients()
 {
-    // MessageServer msg(pos_t1, pos_t2, rot_t1, rot_t2, shoot_t1, pos_b1, pos_b2);
+    // MessageServer msg();
     // msg.type = MessageServer::ServerMessageType::UPDATE_INFO;
     // server_socket.send(msg, *player_1);
     // server_socket.send(msg, *player_1);
@@ -385,8 +385,12 @@ void Server::checkGrid(){
     MessageServer msg(state);
     msg.type = MessageServer::ServerMessageType::CHECK_GRID;
 
-    if (player_1 != nullptr)
+    if (player_1 != nullptr){
+        msg.color = "red";
         server_socket.send(msg, *player_1);
-    if (player_2 != nullptr)
+    }
+    if (player_2 != nullptr){
+        msg.color = "yellow";
         server_socket.send(msg, *player_2);
+    }
 }

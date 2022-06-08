@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <vector>
 #include <thread>
+#include <chrono>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -62,6 +63,8 @@ private:
 
     std::vector<GameObject *> objs_;
     std::vector<GameObject *> gObjsToAdd_;
+
+    std::string color;
 
     GridState gridState;
 

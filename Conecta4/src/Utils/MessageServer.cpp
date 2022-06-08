@@ -16,6 +16,11 @@ void MessageServer::to_bin() {
     tmp += sizeof(ServerState);
 
     memcpy(tmp, &col, sizeof(int));
+    tmp += sizeof(int);
+
+    memcpy(&color, tmp, sizeof(std::string));
+    tmp += sizeof(std::string);
+
 }
 
 int MessageServer::from_bin(char * bobj)
@@ -35,6 +40,10 @@ int MessageServer::from_bin(char * bobj)
     tmp += sizeof(ServerState);
 
     memcpy(&col, tmp, sizeof(int));
+    tmp += sizeof(int);
+
+    memcpy(&color, tmp, sizeof(std::string));
+    tmp += sizeof(std::string);
 
     return 0;
 }

@@ -30,11 +30,15 @@ void Client::net_message_thread()
 			break;
 		case MessageServer::ServerMessageType::CHECK_GRID:
 		{
-		if(player_ != nullptr){
+		if(player_ != nullptr && nextState ==  MessageServer::ServerState::EMPTY && currentState ==  MessageServer::ServerState::PLAYING){
+			player_->setColor(server_recv_msg.color);
+			color = server_recv_msg.color;
 			if(player_->checkPlayerTokens("red")){
+				printf("RED_WINS\n");
 				gridState = GridState::RED;
 			}
 			else if(player_->checkPlayerTokens("yellow")){
+				printf("YELLOW_WINS\n");
 				gridState = GridState::YELLOW;
 			}
 			}
@@ -107,12 +111,14 @@ void Client::run()
 		}
 
 		//Si alguno gana termina
-		if(gridState != GridState::NONE){
-			currentState = MessageServer::ServerState::SERVER_QUIT;
+		if(gridState != GridState::NONE && currentState ==  MessageServer::ServerState::PLAYING){
+			nextState = MessageServer::ServerState::GAME_OVER;
 		}
 
-		if (currentState == MessageServer::ServerState::SERVER_QUIT)
-			break;
+		if (currentState == MessageServer::ServerState::SERVER_QUIT){
+			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+		 	break;
+			 }
 
 		// update
 		for (auto &o : objs_)
@@ -160,17 +166,17 @@ void Client::refresh()
 				objs_.end());
 }
 
-void Client::placeToken(std::string color, int col) {
+void Client::placeToken(std::string color_, int col) {
 	Token* token = new Token();
 	token->setDimensions(50, 50);
-	if(color == "red"){
+	if(color_ == "red"){
 		token->setTexture("./resources/images/red.png");
 	}
 	else{
 		token->setTexture("./resources/images/yellow.png");
 	}
 
-	token->setColor(color);
+	token->setColor(color_);
 
 	player_->placeToken(token, col);
 
@@ -232,8 +238,26 @@ void Client::changeState(MessageServer::ServerState state)
 		playLoad();
 		break;
 	case MessageServer::ServerState::GAME_OVER:
-		loadScreen("./resources/images/title.png", "./resources/fonts/Capture_it.ttf", "Player 'X' Win!",
-				Vector2D(200, 600), Vector2D(700, 50), {125, 125, 125}, 50);
+	{
+		std::string res;
+		if(color == "red" && gridState == GridState::RED)
+			res = "./resources/images/win.png";
+		else if(color == "red" && gridState == GridState::YELLOW)
+			res = "./resources/images/lose.png";
+		else if(color == "yellow" && gridState == GridState::YELLOW)
+			res = "./resources/images/win.png";
+		else if(color == "yellow" && gridState == GridState::RED)
+			res = "./resources/images/lose.png";
+		else
+			res = "./resources/images/title.png";
+
+		if(gridState == GridState::RED)
+			loadScreen(res, "./resources/fonts/Capture_it.ttf", "Red Wins!",
+					Vector2D(300, 600), Vector2D(400, 50), {125, 125, 125}, 50);
+		else if(gridState == GridState::YELLOW)
+			loadScreen(res, "./resources/fonts/Capture_it.ttf", "Yellow Wins!",
+						Vector2D(300, 600), Vector2D(500, 50), {125, 125, 125}, 50);
+	}
 		break;
 	default:
 		break;
@@ -259,6 +283,7 @@ void Client::loadScreen(const std::string &textFile, const std::string &fontFile
 
 void Client::playLoad()
 {
+	printf("Game Starts\n");
 	Background *bG = new Background();
 	bG->setTransform(0, 0);
 	bG->setDimensions(app().width(), app().height());
@@ -272,6 +297,13 @@ void Client::playLoad()
 	player_->setTexture("./resources/images/grid.png");
 
 	objs_.push_back(player_);
+	
+	Font *f = new Font("./resources/fonts/Capture_it.ttf", player_->getColor(),{125, 125, 125}, 50);
+	f->setTransform(10, 10);
+	f->setDimensions(50, 40);
+
+	objs_.push_back(f);
+
 
 	for(int i = 0; i < gObjsToAdd_.size(); i++)
 		objs_.push_back(gObjsToAdd_[i]);

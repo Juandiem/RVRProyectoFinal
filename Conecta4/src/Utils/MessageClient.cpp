@@ -24,6 +24,12 @@ void MessageClient::to_bin()
 
     memcpy(tmp, &win_height, sizeof(int));
     tmp += sizeof(int);
+
+    memcpy(tmp, &win_widthL, sizeof(int));
+    tmp += sizeof(int);
+
+    memcpy(tmp, &win_heightT, sizeof(int));
+    tmp += sizeof(int);
 }
 
 int MessageClient::from_bin(char *bobj)
@@ -43,6 +49,12 @@ int MessageClient::from_bin(char *bobj)
     tmp += sizeof(int);
 
     memcpy(&win_height, tmp, sizeof(int));
+    tmp += sizeof(int);
+
+    memcpy(tmp, &win_widthL, sizeof(int));
+    tmp += sizeof(int);
+
+    memcpy(tmp, &win_heightT, sizeof(int));
     tmp += sizeof(int);
 
     return 0;

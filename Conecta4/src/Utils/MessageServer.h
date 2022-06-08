@@ -50,5 +50,7 @@ public:
 
     int col;
 
+    std::string color;
+
     ServerState state;
 };

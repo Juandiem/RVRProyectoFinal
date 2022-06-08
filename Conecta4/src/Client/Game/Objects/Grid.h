@@ -24,6 +24,9 @@ public:
     bool checkPlayerTokens(std::string color);
     void placeToken(Token* token, int col);
 
+    void setColor(std::string c);
+    std::string getColor();
+
 private:
     Client* app_;
     void setKeys();
@@ -31,5 +34,7 @@ private:
     Token* tokenGrid[7][6];
     MessageClient::InputType key;
 	SDL_Scancode one, two, three, four, five, six, seven;
+
+    std::string color;
 };
 #endif

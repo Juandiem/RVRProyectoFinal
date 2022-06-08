@@ -5,7 +5,7 @@
 
 int main(int argc, char **argv) {
     if (argc < 3) {
-        std::cout << "Usage-> ./TankerGames_server.out <ip>(0.0.0.0) <port>(2000)\n";
+        std::cout << "Usage-> ./Connect4_server.out <ip>(0.0.0.0) <port>(2000)\n";
         return -1;
     }
 
